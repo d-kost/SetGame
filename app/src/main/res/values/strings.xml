@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SetGame</string>
+    <string name="regButton">Send</string>
+    <string name="nickname">Enter your nickname</string>
+</resources>
