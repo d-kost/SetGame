@@ -13,10 +13,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class SetServerTask extends AsyncTask<Request, Void, Response> {
-    final MainActivity activity;
+    private final MainActivity activity;
+    private RequestType requestType;
 
-    public SetServerTask(MainActivity activity) {
+    public SetServerTask(MainActivity activity, RequestType requestType) {
         this.activity = activity;
+        this.requestType = requestType;
     }
 
     public Response requestToSetServer(Request req) {
@@ -47,8 +49,8 @@ public class SetServerTask extends AsyncTask<Request, Void, Response> {
 
     @Override
     protected void onPostExecute(Response response) {
-        Log.i("mytag", "token: " + response.token);
-        activity.receiveResponse(response);
+        Log.i("mytag", "token: " + response.getToken());
+        activity.receiveResponse(response, requestType);
 
     }
 

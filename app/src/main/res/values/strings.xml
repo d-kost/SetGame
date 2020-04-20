@@ -2,4 +2,8 @@
     <string name="app_name">SetGame</string>
     <string name="regButton">Send</string>
     <string name="nickname">Enter your nickname</string>
+    <string name="setButton">Check set</string>
+    <string name="findSetButton">Find set</string>
+    <string name="pointsField">Points: </string>
+    <string name="cardsLeftField">Cards left: </string>
 </resources>

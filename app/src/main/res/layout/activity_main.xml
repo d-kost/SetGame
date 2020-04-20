@@ -29,17 +29,93 @@
     </LinearLayout>
 
 
-    <Button
-        android:onClick="onSendClick"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/regButton"
-        android:background="@color/regButton"
-        android:textColor="@color/regButtonText"/>
+        android:orientation="horizontal">
+
+        <Button
+            android:onClick="onFindSetClick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="end"
+            android:text="@string/findSetButton"
+            android:background="@color/regButton"
+            android:textColor="@color/regButtonText"
+            android:layout_marginRight="5dp"/>
+
+        <Button
+            android:onClick="onCheckSetClick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="end"
+            android:text="@string/setButton"
+            android:background="@color/regButton"
+            android:textColor="@color/regButtonText"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"/>
+
+        <Button
+            android:onClick="onSendClick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/regButton"
+            android:background="@color/regButton"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/regButtonText"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:text="@string/pointsField"
+            android:textAlignment="textEnd"/>
+
+        <TextView
+            android:id="@+id/points"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAlignment="textStart"
+            android:text="0"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:text="@string/cardsLeftField"
+            android:textAlignment="textEnd"/>
+
+        <TextView
+            android:id="@+id/cardsLeft"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAlignment="textStart"
+            android:text=""/>
+
+    </LinearLayout>
+
+
+
 
     <com.setgame.SetCardsFieldView
         android:id="@+id/cardsField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+
 
 </LinearLayout>

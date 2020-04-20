@@ -1,8 +1,13 @@
 package com.setgame;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Card {
-    int count, color, shape, fill;
-    int x ,y, width, height;
+    private int count, color, shape, fill;
+    private transient int x ,y, width, height;
 
     public Card(int count, int color , int shape, int fill) {
         this.count = count;
@@ -17,6 +22,15 @@ public class Card {
         this.y = y;
         this.width = width;
         this.height = height;
+    }
+
+
+
+    public boolean isTouched(float x, float y) {
+        if ((this.x < x) && ((this.x + width) > x) && (this.y < y) && ((this.y + height) > y)) {
+            return true;
+        }
+        return false;
     }
 
     @Override

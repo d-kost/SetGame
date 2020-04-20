@@ -3,15 +3,16 @@ package com.setgame;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 
 public class MainActivity extends AppCompatActivity {
     SetCardsFieldView cardsFieldView;
-    TextView tv;
+    TextView tvPoints, tvCardsLeft;
     EditText etNickname;
     int token = 0;
 
@@ -19,42 +20,65 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tv = findViewById(R.id.text);
+        tvPoints = findViewById(R.id.points);
+        tvCardsLeft = findViewById(R.id.cardsLeft);
         cardsFieldView = findViewById(R.id.cardsField);
         etNickname = findViewById(R.id.etNickname);
 
-//        Request req = Request.FetchCardsRequest(8754661);
-//        SetServerTask task = new SetServerTask(this);
-//        task.execute(req);
+    }
 
+
+    public void receiveResponse(Response r, RequestType requestType) {
+
+        switch (requestType) {
+            case REGISTER: {
+                if ((r.getToken() != 0) || (r.getToken() != -1)) {
+                    token = r.getToken();
+                    sendFetchRequest();
+                }
+            }
+            break;
+            case FETCH_CARDS: {
+                cardsFieldView.setCardField(new CardField(r.getCards()));
+            }
+            break;
+            case TAKE_SET: {
+                tvPoints.setText(Integer.toString(r.getPoints()));
+                tvCardsLeft.setText(Integer.toString(r.getCards_left()));
+                sendFetchRequest();
+            }
+            break;
+        }
 
     }
 
-    // TODO: добавить кнопку для отправки карт
-    // TODO: отобразить число очков игрока
-
-    public void receiveResponse(Response r) {
-        if ((token == 0) && (r.token != 0)) {
-            token = r.token;
-
-            Request req = Request.FetchCardsRequest(token);
-            SetServerTask task = new SetServerTask(this);
-            task.execute(req);
-        }
-
-        if (r.cards != null) {
-            cardsFieldView.setCardField(new CardField(r.cards));
-        }
-
+    private void sendFetchRequest() {
+        Request req = Request.FetchCardsRequest(token);
+        SetServerTask task = new SetServerTask(this, RequestType.FETCH_CARDS);
+        task.execute(req);
     }
 
     public void onSendClick(View view) {
         String nickname = etNickname.getText().toString();
         if (!nickname.equals("")) {
             Request req = Request.RegisterRequest(nickname);
-            SetServerTask task = new SetServerTask(this);
+            SetServerTask task = new SetServerTask(this, RequestType.REGISTER);
             task.execute(req);
         }
 
+    }
+
+    public void onCheckSetClick(View view) {
+        ArrayList<Card> set = cardsFieldView.checkSet();
+
+        if (set != null) {
+            Request req = Request.TakeSetRequest(token, set);
+            SetServerTask task = new SetServerTask(this, RequestType.TAKE_SET);
+            task.execute(req);
+        }
+    }
+
+    public void onFindSetClick(View view) {
+        cardsFieldView.findSet();
     }
 }
